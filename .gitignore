@@ -1,0 +1,23 @@
+# --- База данных и рантайм-файлы (создаются при запуске, не коммитим) ---
+data/*.db
+data/*.db-shm
+data/*.db-wal
+data/port.txt
+data/sms.log
+data/backup/
+
+# --- Служебное окружение ---
+node_modules/
+runtime/
+.env
+.env.*
+
+# --- Секреты: пароли стартовых аккаунтов и адрес сайта (создаётся автоматически) ---
+secrets.local.json
+
+# --- Временные файлы и мусор ОС ---
+_tmp_*
+*.tmp
+Thumbs.db
+desktop.ini
+.DS_Store

@@ -1,0 +1,218 @@
+/**
+ * КАТАЛОГ КОМПЛЕКТУЮЩИХ — версия 2026.1
+ * ============================================================================
+ * Единый источник правды: из этого файла наполняется таблица `components`
+ * (см. lib/seed.js → syncCatalog) и отдаётся конфигуратору через /api/catalog.
+ *
+ * Название (Name) — полное, как в магазине: бренд + модель + ключевая характеристика.
+ * Никаких обрезок и троеточий — карточка должна читаться целиком.
+ *
+ * Поля:
+ *   Id, Category, Name, Image, Price, Description, PerformanceIndex (0..100+),
+ *   Brand, Tags[]                       — общие
+ *   CPU:     Socket, RamType, TDP, Cores, Threads, Clock
+ *   GPU:     TDP, MemoryGB, Length, Interface
+ *   Motherboard: Socket, RamType, FormFactor, MemorySlots, MaxMemoryGB, M2Slots
+ *   RAM:     RamType, MemoryGB, Modules, Speed, CAS
+ *   PSU:     Wattage, Efficiency, Modular, FormFactor
+ *   Cooler:  CoolerType, TDP, Sockets[], Height, Radiator
+ *   Case:    FormFactor, Supported[], MaxGpuLength, MaxCoolerHeight
+ *   Storage: CapacityGB, DriveType, Interface, ReadSpeed
+ * ========================================================================== */
+
+const COMPONENTS = [
+
+  /* ------------------------------ CPU ------------------------------ */
+  {Id:1,Category:"CPU",Name:"AMD Ryzen 3 3200G OEM",Brand:"AMD",Image:"cpu.png",Price:7500,Socket:"AM4",RamType:"DDR4",TDP:65,Cores:4,Threads:4,Clock:3.7,IGPU:true,PerformanceIndex:18,Description:"Встроенная графика Vega 8 — ПК тянет без видеокарты",Tags:["office"]},
+  {Id:2,Category:"CPU",Name:"AMD Ryzen 5 4600G",Brand:"AMD",Image:"cpu.png",Price:11500,Socket:"AM4",RamType:"DDR4",TDP:65,Cores:6,Threads:12,Clock:4.2,IGPU:true,PerformanceIndex:33,Description:"6 ядер с встроенной графикой Vega 7, сокет AM4",Tags:["office"]},
+  {Id:3,Category:"CPU",Name:"AMD Ryzen 5 5500",Brand:"AMD",Image:"cpu.png",Price:9500,Socket:"AM4",RamType:"DDR4",TDP:65,Cores:6,Threads:12,Clock:4.4,PerformanceIndex:45,Description:"Самый доступный 6-ядерник для плат на AM4",Tags:["office","gaming"]},
+  {Id:4,Category:"CPU",Name:"AMD Ryzen 5 5600",Brand:"AMD",Image:"cpu.png",Price:12500,Socket:"AM4",RamType:"DDR4",TDP:65,Cores:6,Threads:12,Clock:4.4,PerformanceIndex:55,Description:"Народный универсал: игры, работа и монтаж",Tags:["gaming","office","montage"]},
+  {Id:5,Category:"CPU",Name:"AMD Ryzen 7 5700G",Brand:"AMD",Image:"cpu.png",Price:21000,Socket:"AM4",RamType:"DDR4",TDP:65,Cores:8,Threads:16,Clock:4.2,IGPU:true,PerformanceIndex:60,Description:"8 ядер и встроенная графика Vega 8",Tags:["gaming","office"]},
+  {Id:6,Category:"CPU",Name:"AMD Ryzen 7 5700X",Brand:"AMD",Image:"cpu.png",Price:18000,Socket:"AM4",RamType:"DDR4",TDP:65,Cores:8,Threads:16,Clock:4.6,PerformanceIndex:66,Description:"Холодный 8-ядерник для игр и рендера",Tags:["gaming","montage"]},
+  {Id:7,Category:"CPU",Name:"AMD Ryzen 9 5900X",Brand:"AMD",Image:"cpu.png",Price:32000,Socket:"AM4",RamType:"DDR4",TDP:105,Cores:12,Threads:24,Clock:4.8,PerformanceIndex:80,Description:"12 ядер для монтажа 4K и тяжёлых сцен",Tags:["montage","3d","gaming"]},
+  {Id:8,Category:"CPU",Name:"AMD Ryzen 9 5950X",Brand:"AMD",Image:"cpu.png",Price:45000,Socket:"AM4",RamType:"DDR4",TDP:105,Cores:16,Threads:32,Clock:4.9,PerformanceIndex:88,Description:"16 ядер, топ платформы AM4",Tags:["montage","3d"]},
+
+  {Id:9,Category:"CPU",Name:"Intel Core i3-12100F",Brand:"Intel",Image:"cpu.png",Price:8500,Socket:"LGA1700",RamType:"DDR4",TDP:58,Cores:4,Threads:8,Clock:4.4,PerformanceIndex:34,Description:"Бюджетные 4 ядра для офиса и простых игр",Tags:["office"]},
+  {Id:10,Category:"CPU",Name:"Intel Core i5-12400F",Brand:"Intel",Image:"cpu.png",Price:13500,Socket:"LGA1700",RamType:"DDR4",TDP:65,Cores:6,Threads:12,Clock:4.4,PerformanceIndex:55,Description:"Народный 6-ядерник с платформой LGA1700",Tags:["office","gaming"]},
+  {Id:11,Category:"CPU",Name:"Intel Core i3-14100F",Brand:"Intel",Image:"cpu.png",Price:12500,Socket:"LGA1700",RamType:"DDR4",TDP:60,Cores:4,Threads:8,Clock:4.7,PerformanceIndex:42,Description:"Самый быстрый i3 — 4 быстрых ядра",Tags:["office","gaming"]},
+  {Id:12,Category:"CPU",Name:"Intel Core i5-13400F",Brand:"Intel",Image:"cpu.png",Price:20000,Socket:"LGA1700",RamType:"DDR4",TDP:65,Cores:10,Threads:16,Clock:4.6,PerformanceIndex:64,Description:"10 ядер: отличный баланс для игр и работы",Tags:["gaming","montage"]},
+  {Id:13,Category:"CPU",Name:"Intel Core i5-13400",Brand:"Intel",Image:"cpu.png",Price:22500,Socket:"LGA1700",RamType:"DDR4",TDP:65,Cores:10,Threads:16,Clock:4.6,IGPU:true,PerformanceIndex:66,Description:"Версия со встроенной графикой Intel UHD 730",Tags:["office","gaming"]},
+  {Id:14,Category:"CPU",Name:"Intel Core i5-13600KF",Brand:"Intel",Image:"cpu.png",Price:31000,Socket:"LGA1700",RamType:"DDR4",TDP:125,Cores:14,Threads:20,Clock:5.1,PerformanceIndex:82,Description:"Лучший игровой процессор по цене/качеству",Tags:["gaming","montage","3d"]},
+  {Id:15,Category:"CPU",Name:"Intel Core i5-14600KF",Brand:"Intel",Image:"cpu.png",Price:33000,Socket:"LGA1700",RamType:"DDR4",TDP:125,Cores:14,Threads:20,Clock:5.3,PerformanceIndex:85,Description:"Оптимальный игровой процессор поколения 14",Tags:["gaming","montage","3d"]},
+  {Id:16,Category:"CPU",Name:"Intel Core i7-12700KF",Brand:"Intel",Image:"cpu.png",Price:34000,Socket:"LGA1700",RamType:"DDR4",TDP:125,Cores:12,Threads:20,Clock:5.0,PerformanceIndex:80,Description:"Разблокированный множитель, 12 ядер",Tags:["gaming","3d"]},
+  {Id:17,Category:"CPU",Name:"Intel Core i7-14700K",Brand:"Intel",Image:"cpu.png",Price:45000,Socket:"LGA1700",RamType:"DDR4",TDP:125,Cores:20,Threads:28,Clock:5.6,PerformanceIndex:93,Description:"20 ядер для игр, стримов и рендера",Tags:["gaming","montage","3d","stream"]},
+  {Id:18,Category:"CPU",Name:"Intel Core i9-14900K",Brand:"Intel",Image:"cpu.png",Price:62000,Socket:"LGA1700",RamType:"DDR4",TDP:125,Cores:24,Threads:32,Clock:6.0,PerformanceIndex:100,Description:"Флагман LGA1700: 24 ядра для всего",Tags:["montage","3d","stream"]},
+  {Id:19,Category:"CPU",Name:"Intel Core i9-14900KS",Brand:"Intel",Image:"cpu.png",Price:78000,Socket:"LGA1700",RamType:"DDR4",TDP:150,Cores:24,Threads:32,Clock:6.2,PerformanceIndex:102,Description:"6.2 ГГц — экстремальный разгонный флагман",Tags:["3d","montage"]},
+
+  {Id:20,Category:"CPU",Name:"AMD Ryzen 5 7500F",Brand:"AMD",Image:"cpu.png",Price:15500,Socket:"AM5",RamType:"DDR5",TDP:65,Cores:6,Threads:12,Clock:5.1,PerformanceIndex:62,Description:"Топ за свои деньги на сокете AM5",Tags:["gaming","office"]},
+  {Id:21,Category:"CPU",Name:"AMD Ryzen 5 7600X",Brand:"AMD",Image:"cpu.png",Price:23000,Socket:"AM5",RamType:"DDR5",TDP:105,Cores:6,Threads:12,Clock:5.3,PerformanceIndex:72,Description:"Вход в AM5 с запасом на разгон",Tags:["gaming","montage"]},
+  {Id:22,Category:"CPU",Name:"AMD Ryzen 5 9600X",Brand:"AMD",Image:"cpu.png",Price:29000,Socket:"AM5",RamType:"DDR5",TDP:65,Cores:6,Threads:12,Clock:5.4,PerformanceIndex:80,Description:"Поколение Zen 5: 6 ядер по 5.4 ГГц",Tags:["gaming","montage"]},
+  {Id:23,Category:"CPU",Name:"AMD Ryzen 7 7800X3D",Brand:"AMD",Image:"cpu.png",Price:42000,Socket:"AM5",RamType:"DDR5",TDP:120,Cores:8,Threads:16,Clock:5.0,PerformanceIndex:95,Description:"Лучший игровой CPU: 3D V-Cache",Tags:["gaming"]},
+  {Id:24,Category:"CPU",Name:"AMD Ryzen 7 9700X",Brand:"AMD",Image:"cpu.png",Price:43000,Socket:"AM5",RamType:"DDR5",TDP:65,Cores:8,Threads:16,Clock:5.2,PerformanceIndex:84,Description:"8 ядер Zen 5 для игр и монтажа",Tags:["gaming","montage"]},
+  {Id:25,Category:"CPU",Name:"AMD Ryzen 9 7950X",Brand:"AMD",Image:"cpu.png",Price:62000,Socket:"AM5",RamType:"DDR5",TDP:170,Cores:16,Threads:32,Clock:5.7,PerformanceIndex:96,Description:"16 ядер для рендера и тяжёлого монтажа",Tags:["montage","3d"]},
+  {Id:26,Category:"CPU",Name:"AMD Ryzen 9 9950X",Brand:"AMD",Image:"cpu.png",Price:69000,Socket:"AM5",RamType:"DDR5",TDP:170,Cores:16,Threads:32,Clock:5.7,PerformanceIndex:99,Description:"Zen 5, 16 ядер — лидер многопоточной производительности",Tags:["montage","3d","stream"]},
+  {Id:27,Category:"CPU",Name:"AMD Ryzen 7 9800X3D",Brand:"AMD",Image:"cpu.png",Price:58000,Socket:"AM5",RamType:"DDR5",TDP:120,Cores:8,Threads:16,Clock:5.2,PerformanceIndex:99,Description:"Обновлённый 3D V-Cache — максимум кадров в игре",Tags:["gaming"]},
+
+  {Id:28,Category:"CPU",Name:"Intel Core Ultra 5 245K",Brand:"Intel",Image:"cpu.png",Price:42000,Socket:"LGA1851",RamType:"DDR5",TDP:125,Cores:14,Threads:14,Clock:5.2,PerformanceIndex:88,Description:"Новая платформа LGA1851, 14 ядер",Tags:["gaming","montage","3d"]},
+  {Id:29,Category:"CPU",Name:"Intel Core Ultra 7 265K",Brand:"Intel",Image:"cpu.png",Price:63000,Socket:"LGA1851",RamType:"DDR5",TDP:250,Cores:20,Threads:20,Clock:5.5,PerformanceIndex:98,Description:"20 ядер Core Ultra — топ для рендера",Tags:["montage","3d","stream"]},
+  {Id:30,Category:"CPU",Name:"Intel Core Ultra 9 285K",Brand:"Intel",Image:"cpu.png",Price:95000,Socket:"LGA1851",RamType:"DDR5",TDP:250,Cores:24,Threads:24,Clock:5.7,PerformanceIndex:105,Description:"24 ядра — абсолютный флагман платформы",Tags:["3d","montage"]},
+
+  /* ------------------------------ GPU ------------------------------ */
+  {Id:31,Category:"GPU",Name:"Palit GeForce GTX 1650 StormX 4 ГБ",Brand:"Palit",Image:"gpu.png",Price:15000,TDP:75,MemoryGB:4,Interface:"GDDR6",Length:172,PerformanceIndex:22,Description:"Мини-видеокарта для офиса и лёгких игр",Tags:["office"]},
+  {Id:32,Category:"GPU",Name:"PowerColor Radeon RX 6500 XT Fighter 4 ГБ",Brand:"PowerColor",Image:"gpu.png",Price:16000,TDP:107,MemoryGB:4,Interface:"GDDR6",Length:200,PerformanceIndex:20,Description:"Бюджетная игровая карта для 1080p",Tags:["office","gaming"]},
+  {Id:33,Category:"GPU",Name:"Palit GeForce GTX 1660 SUPER Dual 6 ГБ",Brand:"Palit",Image:"gpu.png",Price:20000,TDP:125,MemoryGB:6,Interface:"GDDR6",Length:192,PerformanceIndex:30,Description:"Классика для игр в 1080p на высоких",Tags:["gaming"]},
+  {Id:34,Category:"GPU",Name:"Palit GeForce RTX 3050 Dual 8 ГБ",Brand:"Palit",Image:"gpu.png",Price:26000,TDP:130,MemoryGB:8,Interface:"GDDR6",Length:200,PerformanceIndex:35,Description:"8 ГБ видеопамяти и поддержка DLSS",Tags:["gaming","montage"]},
+  {Id:35,Category:"GPU",Name:"Sapphire Pulse Radeon RX 7600 8 ГБ",Brand:"Sapphire",Image:"gpu.png",Price:31000,TDP:165,MemoryGB:8,Interface:"GDDR6",Length:204,PerformanceIndex:55,Description:"Свежая архитектура RDNA 3 для 1080p/1440p",Tags:["gaming","montage"]},
+  {Id:36,Category:"GPU",Name:"Palit GeForce RTX 3060 Dual 12 ГБ",Brand:"Palit",Image:"gpu.png",Price:34000,TDP:170,MemoryGB:12,Interface:"GDDR6",Length:242,PerformanceIndex:58,Description:"12 ГБ памяти — запас под монтаж 4K",Tags:["gaming","montage","3d"]},
+  {Id:37,Category:"GPU",Name:"Intel Arc A770 Phantom Gaming 16 ГБ",Brand:"Intel",Image:"gpu.png",Price:33000,TDP:225,MemoryGB:16,Interface:"GDDR6",Length:267,PerformanceIndex:62,Description:"16 ГБ и аппаратный рейтрейсинг Intel",Tags:["gaming","montage","3d"]},
+  {Id:38,Category:"GPU",Name:"PowerColor Red Devil Radeon RX 6700 XT 12 ГБ",Brand:"PowerColor",Image:"gpu.png",Price:37000,TDP:230,MemoryGB:12,Interface:"GDDR6",Length:320,PerformanceIndex:64,Description:"Мощная карта для рейтрейсинга в 1440p",Tags:["gaming","montage"]},
+  {Id:39,Category:"GPU",Name:"Sapphire Nitro+ Radeon RX 7600 XT 16 ГБ",Brand:"Sapphire",Image:"gpu.png",Price:39000,TDP:190,MemoryGB:16,Interface:"GDDR6",Length:280,PerformanceIndex:66,Description:"16 ГБ видеопамяти для текстур и 3D",Tags:["gaming","3d","montage"]},
+  {Id:40,Category:"GPU",Name:"PowerColor Hellhound Radeon RX 6750 XT 12 ГБ",Brand:"PowerColor",Image:"gpu.png",Price:44000,TDP:250,MemoryGB:12,Interface:"GDDR6",Length:300,PerformanceIndex:72,Description:"1440p на максимальных настройках",Tags:["gaming","montage"]},
+  {Id:41,Category:"GPU",Name:"Palit GeForce RTX 4060 Ti Dual 8 ГБ",Brand:"Palit",Image:"gpu.png",Price:46000,TDP:160,MemoryGB:8,Interface:"GDDR6",Length:201,PerformanceIndex:70,Description:"Энергоэффективная карта для 1440p",Tags:["gaming","montage"]},
+  {Id:42,Category:"GPU",Name:"MSI GeForce RTX 4060 Ti Ventus 2X BLACK 16 ГБ",Brand:"MSI",Image:"gpu.png",Price:54000,TDP:165,MemoryGB:16,Interface:"GDDR6",Length:200,PerformanceIndex:74,Description:"16 ГБ в компактном корпусе — идеальна для 3D",Tags:["gaming","3d","montage"]},
+  {Id:43,Category:"GPU",Name:"Sapphire Pulse Radeon RX 7800 XT 16 ГБ",Brand:"Sapphire",Image:"gpu.png",Price:58000,TDP:263,MemoryGB:16,Interface:"GDDR6",Length:280,PerformanceIndex:78,Description:"Топ 1440p по соотношению цена/кадры",Tags:["gaming","3d","montage"]},
+  {Id:44,Category:"GPU",Name:"ASUS Dual GeForce RTX 4070 SUPER 12 ГБ",Brand:"ASUS",Image:"gpu.png",Price:72000,TDP:220,MemoryGB:12,Interface:"GDDR6X",Length:227,PerformanceIndex:88,Description:"DLSS 3.5 и 4K-гейминг на высоких",Tags:["gaming","montage","3d"]},
+  {Id:45,Category:"GPU",Name:"Sapphire Pulse Radeon RX 7900 GRE 16 ГБ",Brand:"Sapphire",Image:"gpu.png",Price:73000,TDP:260,MemoryGB:16,Interface:"GDDR6",Length:280,PerformanceIndex:85,Description:"16 ГБ для 4K-игр и тяжёлых сцен",Tags:["gaming","3d","montage"]},
+  {Id:46,Category:"GPU",Name:"Palit GeForce RTX 4070 Ti SUPER Dual 16 ГБ",Brand:"Palit",Image:"gpu.png",Price:95000,TDP:285,MemoryGB:16,Interface:"GDDR6X",Length:300,PerformanceIndex:92,Description:"4K 120 fps с трассировкой лучей",Tags:["gaming","3d","montage"]},
+  {Id:47,Category:"GPU",Name:"Sapphire Nitro+ Radeon RX 7900 XTX 24 ГБ",Brand:"Sapphire",Image:"gpu.png",Price:105000,TDP:355,MemoryGB:24,Interface:"GDDR6",Length:330,PerformanceIndex:95,Description:"24 ГБ — тяжёлые текстуры и рендер",Tags:["3d","montage","gaming"]},
+  {Id:48,Category:"GPU",Name:"Palit GeForce RTX 5070 Ti Dual 16 ГБ",Brand:"Palit",Image:"gpu.png",Price:105000,TDP:300,MemoryGB:16,Interface:"GDDR7",Length:300,PerformanceIndex:94,Description:"Поколение Blackwell, 4K без компромиссов",Tags:["gaming","3d","montage"]},
+  {Id:49,Category:"GPU",Name:"ASUS TUF Gaming GeForce RTX 5070 12 ГБ",Brand:"ASUS",Image:"gpu.png",Price:76000,TDP:250,MemoryGB:12,Interface:"GDDR7",Length:330,PerformanceIndex:85,Description:"RTX 5070 для 2K/4K с DLSS 4",Tags:["gaming","montage"]},
+  {Id:50,Category:"GPU",Name:"Palit GeForce RTX 5070 Dual 12 ГБ",Brand:"Palit",Image:"gpu.png",Price:70000,TDP:250,MemoryGB:12,Interface:"GDDR7",Length:242,PerformanceIndex:84,Description:"Быстрый вход в новое поколение RTX",Tags:["gaming"]},
+  {Id:51,Category:"GPU",Name:"Gigabyte GeForce RTX 5080 Gaming OC 16 ГБ",Brand:"Gigabyte",Image:"gpu.png",Price:155000,TDP:360,MemoryGB:16,Interface:"GDDR7",Length:360,PerformanceIndex:99,Description:"Флагман RTX 5080 для 4K 165 fps",Tags:["gaming","3d","montage"]},
+  {Id:52,Category:"GPU",Name:"Gigabyte GeForce RTX 4090 Gaming OC 24 ГБ",Brand:"Gigabyte",Image:"gpu.png",Price:215000,TDP:450,MemoryGB:24,Interface:"GDDR6X",Length:357,PerformanceIndex:100,Description:"24 ГБ и 4K 165 fps — мечта геймера",Tags:["gaming","3d","montage"]},
+  {Id:53,Category:"GPU",Name:"ASUS TUF Gaming GeForce RTX 4080 SUPER 16 ГБ",Brand:"ASUS",Image:"gpu.png",Price:140000,TDP:320,MemoryGB:16,Interface:"GDDR6X",Length:348,PerformanceIndex:96,Description:"Профессиональная 4K-карта с DLSS 3.5",Tags:["gaming","3d","montage"]},
+  {Id:54,Category:"GPU",Name:"Intel Arc B580 Limited Edition 12 ГБ",Brand:"Intel",Image:"gpu.png",Price:28000,TDP:190,MemoryGB:12,Interface:"GDDR6",Length:272,PerformanceIndex:48,Description:"Тёмная лошадка: много памяти за свои деньги",Tags:["gaming","office","montage"]},
+
+  /* -------------------------- МАТЕРИНСКИЕ ПЛАТЫ -------------------------- */
+  {Id:55,Category:"Motherboard",Name:"Gigabyte B550M DS3H",Brand:"Gigabyte",Image:"motherboard.png",Price:7200,Socket:"AM4",RamType:"DDR4",FormFactor:"Micro-ATX",MemorySlots:4,MaxMemoryGB:128,M2Slots:2,Description:"Надёжная AM4-плата с 2× M.2",Tags:["office","gaming"]},
+  {Id:56,Category:"Motherboard",Name:"ASRock B550M Pro4",Brand:"ASRock",Image:"motherboard.png",Price:7400,Socket:"AM4",RamType:"DDR4",FormFactor:"Micro-ATX",MemorySlots:4,MaxMemoryGB:128,M2Slots:2,Description:"Бюджетная micro-ATX для Ryzen 3–7",Tags:["office"]},
+  {Id:57,Category:"Motherboard",Name:"ASUS TUF GAMING B550M-PLUS",Brand:"ASUS",Image:"motherboard.png",Price:9200,Socket:"AM4",RamType:"DDR4",FormFactor:"Micro-ATX",MemorySlots:4,MaxMemoryGB:128,M2Slots:2,Description:"VRM 8+2 и кабельные защёлки TUF",Tags:["gaming"]},
+  {Id:58,Category:"Motherboard",Name:"MSI MAG B550 TOMAHAWK MAX WIFI",Brand:"MSI",Image:"motherboard.png",Price:14000,Socket:"AM4",RamType:"DDR4",FormFactor:"ATX",MemorySlots:4,MaxMemoryGB:128,M2Slots:2,Description:"ATX с Wi-Fi 6 и 2× M.2, разгонная",Tags:["gaming","montage"]},
+  {Id:59,Category:"Motherboard",Name:"ASUS ROG STRIX B550-F GAMING",Brand:"ASUS",Image:"motherboard.png",Price:18000,Socket:"AM4",RamType:"DDR4",FormFactor:"ATX",MemorySlots:4,MaxMemoryGB:128,M2Slots:2,Description:"Флагман AM4 с аудио ESS и LAN 2.5G",Tags:["gaming","3d"]},
+
+  {Id:60,Category:"Motherboard",Name:"ASUS TUF GAMING B650M-PLUS WIFI",Brand:"ASUS",Image:"motherboard.png",Price:13500,Socket:"AM5",RamType:"DDR5",FormFactor:"Micro-ATX",MemorySlots:4,MaxMemoryGB:128,M2Slots:3,Description:"AM5 + DDR5 + Wi-Fi 6, готова к памяти 7000+",Tags:["gaming"]},
+  {Id:61,Category:"Motherboard",Name:"MSI MAG B650 TOMAHAWK WIFI",Brand:"MSI",Image:"motherboard.png",Price:19000,Socket:"AM5",RamType:"DDR5",FormFactor:"ATX",MemorySlots:4,MaxMemoryGB:192,M2Slots:3,Description:"Три M.2 и Wi-Fi 6E, запас на два поколения",Tags:["gaming","montage","3d"]},
+  {Id:62,Category:"Motherboard",Name:"Gigabyte B650 AORUS ELITE AX",Brand:"Gigabyte",Image:"motherboard.png",Price:20500,Socket:"AM5",RamType:"DDR5",FormFactor:"ATX",MemorySlots:4,MaxMemoryGB:256,M2Slots:3,Description:"VRM 12+2+2 и охлаждение MOS-транзисторов",Tags:["gaming","3d"]},
+  {Id:63,Category:"Motherboard",Name:"ASUS ROG STRIX B650E-F GAMING WIFI",Brand:"ASUS",Image:"motherboard.png",Price:26000,Socket:"AM5",RamType:"DDR5",FormFactor:"ATX",MemorySlots:4,MaxMemoryGB:256,M2Slots:3,Description:"Топ AM5: PCIe 5.0 x16 и 5 Гбит/с LAN",Tags:["gaming","3d","stream"]},
+  {Id:64,Category:"Motherboard",Name:"Gigabyte X670E AORUS ELITE",Brand:"Gigabyte",Image:"motherboard.png",Price:32000,Socket:"AM5",RamType:"DDR5",FormFactor:"ATX",MemorySlots:4,MaxMemoryGB:256,M2Slots:4,Description:"Четыре M.2 и Thunderbolt 4",Tags:["gaming","3d","montage"]},
+  {Id:65,Category:"Motherboard",Name:"ASUS ROG STRIX X670E-E GAMING WIFI",Brand:"ASUS",Image:"motherboard.png",Price:42000,Socket:"AM5",RamType:"DDR5",FormFactor:"ATX",MemorySlots:4,MaxMemoryGB:256,M2Slots:5,Description:"Пять M.2 — всё хранилище на борту",Tags:["3d","montage","gaming"]},
+
+  {Id:66,Category:"Motherboard",Name:"ASUS PRIME B760M-K D4",Brand:"ASUS",Image:"motherboard.png",Price:8300,Socket:"LGA1700",RamType:"DDR4",FormFactor:"Micro-ATX",MemorySlots:4,MaxMemoryGB:128,M2Slots:2,Description:"Бюджетная DDR4 для офисных сборок",Tags:["office"]},
+  {Id:67,Category:"Motherboard",Name:"Gigabyte B760M DS3H DDR4",Brand:"Gigabyte",Image:"motherboard.png",Price:8800,Socket:"LGA1700",RamType:"DDR4",FormFactor:"Micro-ATX",MemorySlots:4,MaxMemoryGB:128,M2Slots:2,Description:"micro-ATX с поддержкой DDR4-5333",Tags:["office","gaming"]},
+  {Id:68,Category:"Motherboard",Name:"MSI PRO B760M-A WIFI DDR4",Brand:"MSI",Image:"motherboard.png",Price:10200,Socket:"LGA1700",RamType:"DDR4",FormFactor:"Micro-ATX",MemorySlots:4,MaxMemoryGB:128,M2Slots:2,Description:"Wi-Fi 6 и разгонный разъём CPU",Tags:["office","gaming"]},
+  {Id:69,Category:"Motherboard",Name:"ASUS TUF GAMING B760-PLUS WIFI D4",Brand:"ASUS",Image:"motherboard.png",Price:13800,Socket:"LGA1700",RamType:"DDR4",FormFactor:"ATX",MemorySlots:4,MaxMemoryGB:128,M2Slots:3,Description:"ATX для игровых DDR4-сборок",Tags:["gaming"]},
+  {Id:70,Category:"Motherboard",Name:"Gigabyte B760 Gaming AX DDR5",Brand:"Gigabyte",Image:"motherboard.png",Price:15500,Socket:"LGA1700",RamType:"DDR5",FormFactor:"ATX",MemorySlots:4,MaxMemoryGB:128,M2Slots:3,Description:"DDR5 и 2.5G LAN в сбалансированной ATX",Tags:["gaming","montage"]},
+  {Id:71,Category:"Motherboard",Name:"MSI MAG B760 TOMAHAWK WIFI DDR5",Brand:"MSI",Image:"motherboard.png",Price:18500,Socket:"LGA1700",RamType:"DDR5",FormFactor:"ATX",MemorySlots:4,MaxMemoryGB:192,M2Slots:3,Description:"Три M.2, Wi-Fi 6E и топовый VRM",Tags:["gaming","montage","3d"]},
+  {Id:72,Category:"Motherboard",Name:"MSI PRO Z790-P WIFI",Brand:"MSI",Image:"motherboard.png",Price:29000,Socket:"LGA1700",RamType:"DDR5",FormFactor:"ATX",MemorySlots:4,MaxMemoryGB:192,M2Slots:4,Description:"Флагман LGA1700 под разгон и монтаж",Tags:["gaming","3d","montage"]},
+  {Id:73,Category:"Motherboard",Name:"Gigabyte Z790 AORUS ELITE AX",Brand:"Gigabyte",Image:"motherboard.png",Price:33000,Socket:"LGA1700",RamType:"DDR5",FormFactor:"ATX",MemorySlots:4,MaxMemoryGB:192,M2Slots:4,Description:"Z790 с VRM 18+1+2 и LAN 2.5G",Tags:["gaming","3d"]},
+  {Id:74,Category:"Motherboard",Name:"ASUS ROG STRIX Z790-F GAMING WIFI",Brand:"ASUS",Image:"motherboard.png",Price:39000,Socket:"LGA1700",RamType:"DDR5",FormFactor:"ATX",MemorySlots:4,MaxMemoryGB:192,M2Slots:5,Description:"Пять M.2 и Thunderbolt 4 для тяжёлых задач",Tags:["gaming","3d","montage","stream"]},
+
+  {Id:75,Category:"Motherboard",Name:"MSI MAG Z890 TOMAHAWK WIFI",Brand:"MSI",Image:"motherboard.png",Price:31000,Socket:"LGA1851",RamType:"DDR5",FormFactor:"ATX",MemorySlots:4,MaxMemoryGB:256,M2Slots:4,Description:"Новая платформа LGA1851 с Thunderbolt",Tags:["gaming","3d","montage"]},
+  {Id:76,Category:"Motherboard",Name:"ASUS TUF GAMING Z890-PLUS WIFI",Brand:"ASUS",Image:"motherboard.png",Price:39000,Socket:"LGA1851",RamType:"DDR5",FormFactor:"ATX",MemorySlots:4,MaxMemoryGB:256,M2Slots:4,Description:"Core Ultra 200S: DDR5-9200 и Wi-Fi 7",Tags:["gaming","3d","montage","stream"]},
+
+  /* ------------------------------ ОЗУ ------------------------------ */
+  {Id:77,Category:"RAM",Name:"Crucial DDR4 8 ГБ (1×8) 3200 МГц",Brand:"Crucial",Image:"ram.png",Price:1700,RamType:"DDR4",MemoryGB:8,Modules:1,Speed:3200,PerformanceIndex:5,Description:"Один модуль для офисной машины",Tags:["office"]},
+  {Id:78,Category:"RAM",Name:"Kingston FURY Beast Black 16 ГБ (2×8) DDR4-3200",Brand:"Kingston",Image:"ram.png",Price:3200,RamType:"DDR4",MemoryGB:16,Modules:2,Speed:3200,CAS:16,PerformanceIndex:18,Description:"Два модуля — двусторонняя работа контроллера",Tags:["office","gaming"]},
+  {Id:79,Category:"RAM",Name:"Samsung 16 ГБ (2×8) DDR4-3200 OEM",Brand:"Samsung",Image:"ram.png",Price:3400,RamType:"DDR4",MemoryGB:16,Modules:2,Speed:3200,CAS:18,PerformanceIndex:18,Description:"Проверенные OEM-модули для DDR4-плат",Tags:["office","gaming"]},
+  {Id:80,Category:"RAM",Name:"Corsair Vengeance LPX 16 ГБ (2×8) DDR4-3200",Brand:"Corsair",Image:"ram.png",Price:3300,RamType:"DDR4",MemoryGB:16,Modules:2,Speed:3200,CAS:16,PerformanceIndex:18,Description:"Низкопрофильный радиатор, помещается под кулер",Tags:["gaming","montage"]},
+  {Id:81,Category:"RAM",Name:"Patriot Viper Steel 16 ГБ (2×8) DDR4-3600",Brand:"Patriot",Image:"ram.png",Price:4000,RamType:"DDR4",MemoryGB:16,Modules:2,Speed:3600,CAS:18,PerformanceIndex:20,Description:"DDR4-3600 CL18 — быстрые тайминги",Tags:["gaming"]},
+  {Id:82,Category:"RAM",Name:"Kingston FURY Beast Black 32 Гб (2×16) DDR4-3200",Brand:"Kingston",Image:"ram.png",Price:5400,RamType:"DDR4",MemoryGB:32,Modules:2,Speed:3200,CAS:16,PerformanceIndex:32,Description:"Оптимальный объём для игр и монтажа",Tags:["gaming","montage"]},
+  {Id:83,Category:"RAM",Name:"G.Skill Ripjaws V 32 ГБ (2×16) DDR4-3600",Brand:"G.Skill",Image:"ram.png",Price:6500,RamType:"DDR4",MemoryGB:32,Modules:2,Speed:3600,CAS:18,PerformanceIndex:34,Description:"32 ГБ для таймлайна 4K в Premiere",Tags:["gaming","montage","stream"]},
+  {Id:84,Category:"RAM",Name:"Patriot Viper Steel 32 ГБ (2×16) DDR4-3600",Brand:"Patriot",Image:"ram.png",Price:7200,RamType:"DDR4",MemoryGB:32,Modules:2,Speed:3600,CAS:18,PerformanceIndex:34,Description:"Расширенный DDR4-объём для тяжёлых проектов",Tags:["montage","3d"]},
+
+  {Id:85,Category:"RAM",Name:"Kingston FURY Beast Black 16 ГБ (2×8) DDR5-5600",Brand:"Kingston",Image:"ram.png",Price:4200,RamType:"DDR5",MemoryGB:16,Modules:2,Speed:5600,CAS:36,PerformanceIndex:30,Description:"Быстрый старт на платформе DDR5",Tags:["gaming","office"]},
+  {Id:86,Category:"RAM",Name:"ADATA XPG SPECTRIX 16 ГБ (2×8) DDR5-6000",Brand:"ADATA",Image:"ram.png",Price:4500,RamType:"DDR5",MemoryGB:16,Modules:2,Speed:6000,CAS:30,PerformanceIndex:32,Description:"Сладкая точка DDR5 по соотношению цена/тайминги",Tags:["gaming"]},
+  {Id:87,Category:"RAM",Name:"Kingston FURY Beast Black 32 Гб (2×16) DDR5-6000",Brand:"Kingston",Image:"ram.png",Price:7600,RamType:"DDR5",MemoryGB:32,Modules:2,Speed:6000,CAS:36,PerformanceIndex:42,Description:"32 ГБ DDR5 — стандарт для игр в 1440p",Tags:["gaming","montage"]},
+  {Id:88,Category:"RAM",Name:"Corsair Vengeance 32 ГБ (2×16) DDR5-6000 CL30",Brand:"Corsair",Image:"ram.png",Price:9500,RamType:"DDR5",MemoryGB:32,Modules:2,Speed:6000,CAS:30,PerformanceIndex:45,Description:"CL30 — максимум производительности в AM5",Tags:["gaming","montage","3d"]},
+  {Id:89,Category:"RAM",Name:"Patriot Viper Xtreme 5 32 ГБ (2×16) DDR5-6400 CL32",Brand:"Patriot",Image:"ram.png",Price:10800,RamType:"DDR5",MemoryGB:32,Modules:2,Speed:6400,CAS:32,PerformanceIndex:48,Description:"Высокая частота для Z790 и AM5",Tags:["gaming","3d"]},
+  {Id:90,Category:"RAM",Name:"G.Skill Trident Z5 RGB 32 ГБ (2×16) DDR5-6400 CL32",Brand:"G.Skill",Image:"ram.png",Price:12500,RamType:"DDR5",MemoryGB:32,Modules:2,Speed:6400,CAS:32,PerformanceIndex:48,Description:"32 ГБ DDR5-6400 с подсветкой RGB",Tags:["gaming"]},
+  {Id:91,Category:"RAM",Name:"TeamGroup T-Force 48 ГБ (2×24) DDR5-5600",Brand:"TeamGroup",Image:"ram.png",Price:11500,RamType:"DDR5",MemoryGB:48,Modules:2,Speed:5600,CAS:36,PerformanceIndex:55,Description:"48 ГБ для рендера и больших проектов",Tags:["montage","3d"]},
+  {Id:92,Category:"RAM",Name:"Kingston FURY Beast Black 64 Гб (2×32) DDR5-5600",Brand:"Kingston",Image:"ram.png",Price:16000,RamType:"DDR5",MemoryGB:64,Modules:2,Speed:5600,CAS:40,PerformanceIndex:68,Description:"64 ГБ для 3D-сцен и виртуальных машин",Tags:["3d","montage","stream"]},
+  {Id:93,Category:"RAM",Name:"Corsair Vengeance 96 ГБ (2×48) DDR5-5600",Brand:"Corsair",Image:"ram.png",Price:27000,RamType:"DDR5",MemoryGB:96,Modules:2,Speed:5600,CAS:40,PerformanceIndex:80,Description:"96 ГБ — монтаж 8K, рендер-фермы, 3D",Tags:["3d","montage"]},
+
+  /* ------------------------------ БП ------------------------------ */
+  {Id:94,Category:"PSU",Name:"DeepCool PK500D 500 Вт 80+ Bronze",Brand:"DeepCool",Image:"psu.png",Price:3000,Wattage:500,Efficiency:"80+ Bronze",Modular:false,Description:"Бюджетный БП для офисных сборок",Tags:["office"]},
+  {Id:95,Category:"PSU",Name:"Cooler Master MWE Bronze 550 V2 550 Вт",Brand:"Cooler Master",Image:"psu.png",Price:4800,Wattage:550,Efficiency:"80+ Bronze",Modular:false,Description:"550 Вт для офиса и нетребовательных игр",Tags:["office","gaming"]},
+  {Id:96,Category:"PSU",Name:"Corsair RM550e 550 Вт 80+ Gold",Brand:"Corsair",Image:"psu.png",Price:6200,Wattage:550,Efficiency:"80+ Gold",Modular:true,Description:"Модульный БП с тихим вентилятором",Tags:["office","gaming"]},
+  {Id:97,Category:"PSU",Name:"DeepCool PK650D 650 Вт 80+ Bronze",Brand:"DeepCool",Image:"psu.png",Price:3900,Wattage:650,Efficiency:"80+ Bronze",Modular:false,Description:"650 Вт под игровую сборку среднего класса",Tags:["gaming"]},
+  {Id:98,Category:"PSU",Name:"be quiet! Pure Power 12 M 550 Вт 80+ Gold",Brand:"be quiet!",Image:"psu.png",Price:6500,Wattage:550,Efficiency:"80+ Gold",Modular:true,Description:"ATX 3.0 с разъёмом 12V-2×6",Tags:["office"]},
+  {Id:99,Category:"PSU",Name:"MSI MAG A650GL 650 Вт 80+ Gold ATX 3.0",Brand:"MSI",Image:"psu.png",Price:7800,Wattage:650,Efficiency:"80+ Gold",Modular:true,Description:"Нативный кабель для новых видеокарт",Tags:["gaming","montage"]},
+  {Id:100,Category:"PSU",Name:"be quiet! Pure Power 12 M 650 Вт 80+ Gold",Brand:"be quiet!",Image:"psu.png",Price:7400,Wattage:650,Efficiency:"80+ Gold",Modular:true,Description:"Тихий и компактный блок питания",Tags:["office","gaming"]},
+  {Id:101,Category:"PSU",Name:"Corsair RM650e 650 Вт 80+ Gold",Brand:"Corsair",Image:"psu.png",Price:8300,Wattage:650,Efficiency:"80+ Gold",Modular:true,Description:"Проверенная платформа с японскими конденсаторами",Tags:["gaming","montage"]},
+  {Id:102,Category:"PSU",Name:"Chieftec Polaris 750 Вт 80+ Gold",Brand:"Chieftec",Image:"psu.png",Price:9300,Wattage:750,Efficiency:"80+ Gold",Modular:true,Description:"750 Вт для игровых карт уровня RTX 4060–4070",Tags:["gaming"]},
+  {Id:103,Category:"PSU",Name:"Corsair RM750e 750 Вт 80+ Gold ATX 3.0",Brand:"Corsair",Image:"psu.png",Price:10200,Wattage:750,Efficiency:"80+ Gold",Modular:true,Description:"ATX 3.0 — кабель для RTX 40/50 в комплекте",Tags:["gaming","3d"]},
+  {Id:104,Category:"PSU",Name:"DeepCool PX850G 850 Вт 80+ Gold ATX 3.0",Brand:"DeepCool",Image:"psu.png",Price:11800,Wattage:850,Efficiency:"80+ Gold",Modular:true,Description:"850 Вт для 2K-игр и рейтрейсинга",Tags:["gaming","3d","montage"]},
+  {Id:105,Category:"PSU",Name:"be quiet! Pure Power 12 M 850 Вт 80+ Gold",Brand:"be quiet!",Image:"psu.png",Price:12500,Wattage:850,Efficiency:"80+ Gold",Modular:true,Description:"850 Вт с почти бесшумной работой",Tags:["gaming","3d"]},
+  {Id:106,Category:"PSU",Name:"Seasonic Focus GX-850 850 Вт 80+ Gold",Brand:"Seasonic",Image:"psu.png",Price:14500,Wattage:850,Efficiency:"80+ Gold",Modular:true,Description:"10 лет гарантии и вентилятор с гидродинамикой",Tags:["gaming","3d","stream"]},
+  {Id:107,Category:"PSU",Name:"Corsair RM1000e 1000 Вт 80+ Gold ATX 3.0",Brand:"Corsair",Image:"psu.png",Price:17200,Wattage:1000,Efficiency:"80+ Gold",Modular:true,Description:"1000 Вт под топовые видеокарты",Tags:["gaming","3d","montage"]},
+  {Id:108,Category:"PSU",Name:"be quiet! Dark Power 13 1000 Вт 80+ Titanium",Brand:"be quiet!",Image:"psu.png",Price:24500,Wattage:1000,Efficiency:"80+ Titanium",Modular:true,Description:"Кремниевый БП без вентилятора",Tags:["gaming","3d","stream"]},
+  {Id:109,Category:"PSU",Name:"Corsair HX1200i 1200 Вт 80+ Platinum",Brand:"Corsair",Image:"psu.png",Price:31000,Wattage:1200,Efficiency:"80+ Platinum",Modular:true,Description:"1200 Вт и цифровое управление из ПО",Tags:["3d","montage","stream"]},
+
+  /* ----------------------------- КУЛЕРЫ ----------------------------- */
+  {Id:110,Category:"Cooler",Name:"Jonsbo CR-1000 EVO (низкопрофильный)",Brand:"Jonsbo",Image:"cooler.png",Price:1700,CoolerType:"air",TDP:100,Sockets:["AM4","AM5","LGA1700","LGA1851"],Height:68,Description:"Высота 68 мм — для тонких корпусов и HTPC",Tags:["office"]},
+  {Id:111,Category:"Cooler",Name:"DeepCool AG400",Brand:"DeepCool",Image:"cooler.png",Price:1900,CoolerType:"air",TDP:200,Sockets:["AM4","AM5","LGA1700","LGA1851"],Height:150,Description:"Башня с четырьмя теплотрубками и вентилятором 120 мм",Tags:["office","gaming"]},
+  {Id:112,Category:"Cooler",Name:"ID-COOLING SE-224-XTS",Brand:"ID-COOLING",Image:"cooler.png",Price:2000,CoolerType:"air",TDP:180,Sockets:["AM4","AM5","LGA1700","LGA1851"],Height:155,Description:"Чёрная башня на 180 Вт по цене чашки кофе",Tags:["office","gaming"]},
+  {Id:113,Category:"Cooler",Name:"Thermalright Assassin X 120 R SE",Brand:"Thermalright",Image:"cooler.png",Price:2300,CoolerType:"air",TDP:180,Sockets:["AM4","AM5","LGA1700","LGA1851"],Height:148,Description:"Легендарная башня для AM4 и AM5",Tags:["gaming"]},
+  {Id:114,Category:"Cooler",Name:"DeepCool AK400 Digital",Brand:"DeepCool",Image:"cooler.png",Price:3000,CoolerType:"air",TDP:220,Sockets:["AM4","AM5","LGA1700","LGA1851"],Height:160,Description:"Цифровой дисплей температуры процессора",Tags:["gaming","montage"]},
+  {Id:115,Category:"Cooler",Name:"Thermalright Phantom Spirit 120 SE",Brand:"Thermalright",Image:"cooler.png",Price:4400,CoolerType:"air",TDP:250,Sockets:["AM4","AM5","LGA1700","LGA1851"],Height:154,Description:"Двухбашенный кулер с двумя вентиляторами",Tags:["gaming","3d"]},
+  {Id:116,Category:"Cooler",Name:"be quiet! Pure Rock 2 Black",Brand:"be quiet!",Image:"cooler.png",Price:5600,CoolerType:"air",TDP:150,Sockets:["AM4","AM5","LGA1700","LGA1851"],Height:155,Description:"Обновлённый тихий кулер для процессоров до 150 Вт",Tags:["office","gaming"]},
+  {Id:117,Category:"Cooler",Name:"Arctic Freezer 36 A-RGB",Brand:"Arctic",Image:"cooler.png",Price:5900,CoolerType:"air",TDP:230,Sockets:["AM4","AM5","LGA1700","LGA1851"],Height:159,Description:"Два вентилятора P12 PWM PST с подсветкой",Tags:["gaming","3d"]},
+  {Id:118,Category:"Cooler",Name:"DeepCool AK620",Brand:"DeepCool",Image:"cooler.png",Price:6300,CoolerType:"air",TDP:260,Sockets:["AM4","AM5","LGA1700","LGA1851"],Height:160,Description:"Двухбашенный кулер для горячих i7 и Ryzen 9",Tags:["gaming","montage","3d"]},
+  {Id:119,Category:"Cooler",Name:"DeepCool LE520 240 мм",Brand:"DeepCool",Image:"cooler.png",Price:6400,CoolerType:"aio",TDP:260,Sockets:["AM4","AM5","LGA1700","LGA1851"],Radiator:240,Description:"Сборка СЖО с радиатором на 240 мм",Tags:["gaming","montage"]},
+  {Id:120,Category:"Cooler",Name:"DeepCool AK720",Brand:"DeepCool",Image:"cooler.png",Price:7900,CoolerType:"air",TDP:285,Sockets:["AM4","AM5","LGA1700","LGA1851"],Height:160,Description:"Топовая воздушная башня с дисплеем",Tags:["gaming","3d","stream"]},
+  {Id:121,Category:"Cooler",Name:"Arctic Liquid Freezer III 240",Brand:"Arctic",Image:"cooler.png",Price:8600,CoolerType:"aio",TDP:300,Sockets:["AM4","AM5","LGA1700","LGA1851"],Radiator:240,Description:"VRM-вентилятор встроен в помпу СЖО",Tags:["gaming","3d","montage"]},
+  {Id:122,Category:"Cooler",Name:"Noctua NH-D15 (только LGA1700)",Brand:"Noctua",Image:"cooler.png",Price:12800,CoolerType:"air",TDP:250,Sockets:["LGA1700"],Height:165,Description:"Легендарный кулер — ставится только на LGA1700",Tags:["office","gaming"]},
+  {Id:123,Category:"Cooler",Name:"DeepCool LS720 360 мм",Brand:"DeepCool",Image:"cooler.png",Price:12500,CoolerType:"aio",TDP:320,Sockets:["AM4","AM5","LGA1700","LGA1851"],Radiator:360,Description:"Мощное СЖО 360 мм для горячих CPU",Tags:["gaming","3d","stream"]},
+  {Id:124,Category:"Cooler",Name:"DeepCool Gammaliquid 360 BLACK",Brand:"DeepCool",Image:"cooler.png",Price:14200,CoolerType:"aio",TDP:330,Sockets:["AM4","AM5","LGA1700","LGA1851"],Radiator:360,Description:"Три вентилятора 120 мм и ARGB-помпа",Tags:["gaming","3d","stream"]},
+  {Id:125,Category:"Cooler",Name:"Arctic Liquid Freezer III 360",Brand:"Arctic",Image:"cooler.png",Price:15800,CoolerType:"aio",TDP:350,Sockets:["AM4","AM5","LGA1700","LGA1851"],Radiator:360,Description:"Самое мощное СЖО в линейке",Tags:["gaming","3d","montage","stream"]},
+
+  /* ----------------------------- КОРПУСА ----------------------------- */
+  {Id:126,Category:"Case",Name:"DeepCool CH170",Brand:"DeepCool",Image:"pc_case.png",Price:3300,FormFactor:"Micro-ATX",Supported:["Mini-ITX","Micro-ATX","ATX"],MaxGpuLength:310,MaxCoolerHeight:150,Description:"Компактный корпус под micro-ATX",Tags:["office"]},
+  {Id:127,Category:"Case",Name:"DeepCool CC360",Brand:"DeepCool",Image:"pc_case.png",Price:3900,FormFactor:"Micro-ATX",Supported:["Mini-ITX","Micro-ATX","ATX"],MaxGpuLength:320,MaxCoolerHeight:150,Description:"Сетчатый фронт и четыре вентилятора в комплекте",Tags:["office","gaming"]},
+  {Id:128,Category:"Case",Name:"Aerocool Quantum Mesh",Brand:"Aerocool",Image:"pc_case.png",Price:4400,FormFactor:"ATX",Supported:["Mini-ITX","Micro-ATX","ATX"],MaxGpuLength:400,MaxCoolerHeight:150,Description:"Бюджетный ATX с хорошей продуваемостью",Tags:["office","gaming"]},
+  {Id:129,Category:"Case",Name:"Zalman i3 Neo",Brand:"Zalman",Image:"pc_case.png",Price:5400,FormFactor:"Micro-ATX",Supported:["Mini-ITX","Micro-ATX"],MaxGpuLength:350,MaxCoolerHeight:155,Description:"micro-ATX с закалённым стеклом и RGB",Tags:["office","gaming"]},
+  {Id:130,Category:"Case",Name:"Lian Li Lancool 205M",Brand:"Lian Li",Image:"pc_case.png",Price:5900,FormFactor:"Micro-ATX",Supported:["Mini-ITX","Micro-ATX"],MaxGpuLength:330,MaxCoolerHeight:161,Description:"Продуваемый micro-ATX для игр",Tags:["gaming"]},
+  {Id:131,Category:"Case",Name:"Cougar Duoface Pro",Brand:"Cougar",Image:"pc_case.png",Price:7400,FormFactor:"ATX",Supported:["Mini-ITX","Micro-ATX","ATX"],MaxGpuLength:330,MaxCoolerHeight:160,Description:"Две панели: сетка и стекло, три вентилятора",Tags:["gaming"]},
+  {Id:132,Category:"Case",Name:"Montech AIR 903 MAX",Brand:"Montech",Image:"pc_case.png",Price:8300,FormFactor:"ATX",Supported:["Mini-ITX","Micro-ATX","ATX"],MaxGpuLength:400,MaxCoolerHeight:175,Description:"Четыре огромных вентилятора 140 мм в комплекте",Tags:["gaming","montage"]},
+  {Id:133,Category:"Case",Name:"DeepCool CH560 Digital",Brand:"DeepCool",Image:"pc_case.png",Price:10200,FormFactor:"ATX",Supported:["Mini-ITX","Micro-ATX","ATX"],MaxGpuLength:380,MaxCoolerHeight:175,Description:"Дисплей температуры и RGB на фронте",Tags:["gaming","3d"]},
+  {Id:134,Category:"Case",Name:"Lian Li LANCOOL 216",Brand:"Lian Li",Image:"pc_case.png",Price:11900,FormFactor:"ATX",Supported:["Mini-ITX","Micro-ATX","ATX"],MaxGpuLength:392,MaxCoolerHeight:180,Description:"Отличный обдув видеокарты, две ПТК",Tags:["gaming","3d"]},
+  {Id:135,Category:"Case",Name:"Corsair 4000D Airflow",Brand:"Corsair",Image:"pc_case.png",Price:12500,FormFactor:"ATX",Supported:["Mini-ITX","Micro-ATX","ATX"],MaxGpuLength:360,MaxCoolerHeight:170,Description:"Классика продуваемого корпуса",Tags:["gaming","montage"]},
+  {Id:136,Category:"Case",Name:"Phanteks XT Pro Ultra",Brand:"Phanteks",Image:"pc_case.png",Price:13200,FormFactor:"ATX",Supported:["Mini-ITX","Micro-ATX","ATX"],MaxGpuLength:400,MaxCoolerHeight:185,Description:"Закалённое стекло и подсветка по периметру",Tags:["gaming","3d"]},
+  {Id:137,Category:"Case",Name:"be quiet! Pure Base 500",Brand:"be quiet!",Image:"pc_case.png",Price:14200,FormFactor:"ATX",Supported:["Mini-ITX","Micro-ATX","ATX"],MaxGpuLength:410,MaxCoolerHeight:170,Description:"Тихий корпус с дверцей на петлях",Tags:["office","gaming"]},
+  {Id:138,Category:"Case",Name:"Fractal Design Terra (Mini-ITX)",Brand:"Fractal Design",Image:"pc_case.png",Price:14500,FormFactor:"Mini-ITX",Supported:["Mini-ITX"],MaxGpuLength:322,MaxCoolerHeight:77,Description:"Компакт и дерево: корпус для маленьких ПК",Tags:["office","gaming"]},
+  {Id:139,Category:"Case",Name:"Lian Li O11 Dynamic EVO",Brand:"Lian Li",Image:"pc_case.png",Price:17500,FormFactor:"ATX",Supported:["Mini-ITX","Micro-ATX","ATX"],MaxGpuLength:426,MaxCoolerHeight:167,Description:"Аквариум с тремя зонами и RGB",Tags:["gaming","3d","stream"]},
+  {Id:140,Category:"Case",Name:"ASUS TUF Gaming GT502",Brand:"ASUS",Image:"pc_case.png",Price:18500,FormFactor:"ATX",Supported:["Mini-ITX","Micro-ATX","ATX"],MaxGpuLength:450,MaxCoolerHeight:180,Description:"Модульный корпус с двумя камерами",Tags:["gaming","3d"]},
+  {Id:141,Category:"Case",Name:"Phanteks Enthoo Pro 2",Brand:"Phanteks",Image:"pc_case.png",Price:21000,FormFactor:"ATX",Supported:["Mini-ITX","Micro-ATX","ATX"],MaxGpuLength:465,MaxCoolerHeight:190,Description:"Топовая продуваемость и два вентилятора в комплекте",Tags:["gaming","3d","stream"]},
+
+  /* --------------------------- НАКОПИТЕЛИ --------------------------- */
+  {Id:142,Category:"Storage",Name:"Crucial BX500 480 ГБ SATA 2.5\"",Brand:"Crucial",Image:"storage.png",Price:2900,CapacityGB:480,DriveType:"SSD",Interface:"SATA 3",ReadSpeed:540,Description:"Бюджетный диск под систему и документы",Tags:["office"]},
+  {Id:143,Category:"Storage",Name:"Samsung 860 500 ГБ SATA 2.5\"",Brand:"Samsung",Image:"storage.png",Price:3600,CapacityGB:500,DriveType:"SSD",Interface:"SATA 3",ReadSpeed:550,Description:"Надёжный SATA-диск с гарантией 5 лет",Tags:["office","gaming"]},
+  {Id:144,Category:"Storage",Name:"Kingston NV3 1 ТБ NVMe PCIe 4.0 x4",Brand:"Kingston",Image:"storage.png",Price:5400,CapacityGB:1000,DriveType:"SSD",Interface:"NVMe 4.0",ReadSpeed:6000,Description:"Быстрый системный диск на 1 ТБ",Tags:["office","gaming","montage"]},
+  {Id:145,Category:"Storage",Name:"Kingston NV3 2 ТБ NVMe PCIe 4.0 x4",Brand:"Kingston",Image:"storage.png",Price:8600,CapacityGB:2000,DriveType:"SSD",Interface:"NVMe 4.0",ReadSpeed:7000,Description:"Оптимальный объём для игр и проектов",Tags:["gaming","montage"]},
+  {Id:146,Category:"Storage",Name:"Crucial P3 Plus 1 ТБ NVMe PCIe 4.0 x4",Brand:"Crucial",Image:"storage.png",Price:5600,CapacityGB:1000,DriveType:"SSD",Interface:"NVMe 4.0",ReadSpeed:5000,Description:"До 3600 МБ/с записи по IOMMU",Tags:["office","gaming"]},
+  {Id:147,Category:"Storage",Name:"WD Blue SN580 1 ТБ NVMe PCIe 4.0 x4",Brand:"WD",Image:"storage.png",Price:6100,CapacityGB:1000,DriveType:"SSD",Interface:"NVMe 4.0",ReadSpeed:4150,Description:"Надёжный NVMe с игровым режимом",Tags:["gaming"]},
+  {Id:148,Category:"Storage",Name:"WD Blue SN580 2 ТБ NVMe PCIe 4.0 x4",Brand:"WD",Image:"storage.png",Price:10600,CapacityGB:2000,DriveType:"SSD",Interface:"NVMe 4.0",ReadSpeed:4150,Description:"2 ТБ для библиотеки игр",Tags:["gaming","montage"]},
+  {Id:149,Category:"Storage",Name:"Samsung 870 EVO 1 ТБ SATA 2.5\"",Brand:"Samsung",Image:"storage.png",Price:7300,CapacityGB:1000,DriveType:"SSD",Interface:"SATA 3",ReadSpeed:560,Description:"Эталонная скорость SATA-дисков",Tags:["office","gaming"]},
+  {Id:150,Category:"Storage",Name:"WD Black SN770 1 ТБ NVMe PCIe 4.0 x4",Brand:"WD",Image:"storage.png",Price:7600,CapacityGB:1000,DriveType:"SSD",Interface:"NVMe 4.0",ReadSpeed:5150,Description:"Игровой NVMe с ускорением до 7300 МБ/с",Tags:["gaming"]},
+  {Id:151,Category:"Storage",Name:"Crucial P3 Plus 4 ТБ NVMe PCIe 4.0 x4",Brand:"Crucial",Image:"storage.png",Price:18500,CapacityGB:4000,DriveType:"SSD",Interface:"NVMe 4.0",ReadSpeed:5000,Description:"4 ТБ под исходники и рендер",Tags:["montage","3d"]},
+  {Id:152,Category:"Storage",Name:"Samsung 990 PRO 2 ТБ NVMe PCIe 4.0 x4",Brand:"Samsung",Image:"storage.png",Price:19500,CapacityGB:2000,DriveType:"SSD",Interface:"NVMe 4.0",ReadSpeed:7450,Description:"Топовый NVMe: 7450 МБ/с и 5 лет гарантии",Tags:["gaming","montage","3d"]},
+  {Id:153,Category:"Storage",Name:"Kingston Fury Renegade 2 ТБ NVMe PCIe 4.0 x4",Brand:"Kingston",Image:"storage.png",Price:14500,CapacityGB:2000,DriveType:"SSD",Interface:"NVMe 4.0",ReadSpeed:7300,Description:"Игровой диск с радиатором в комплекте",Tags:["gaming","stream"]},
+  {Id:154,Category:"Storage",Name:"Samsung 870 QVO 4 ТБ SATA 2.5\"",Brand:"Samsung",Image:"storage.png",Price:17000,CapacityGB:4000,DriveType:"SSD",Interface:"SATA 3",ReadSpeed:560,Description:"Большой архив под исходники и резервные копии",Tags:["montage","3d"]},
+  {Id:155,Category:"Storage",Name:"Samsung 990 PRO 4 ТБ NVMe PCIe 4.0 x4",Brand:"Samsung",Image:"storage.png",Price:36000,CapacityGB:4000,DriveType:"SSD",Interface:"NVMe 4.0",ReadSpeed:7450,Description:"4 ТБ флагманского NVMe для 8K-монтажа",Tags:["montage","3d","stream"]},
+];
+
+/** Категории каталога — единый список для БД, API и интерфейса. */
+const CATEGORY_LIST = [
+  { tag: 'CPU',         ru: 'Процессор',   color: '#8B5CF6' },
+  { tag: 'Motherboard', ru: 'Мат. плата',   color: '#6366F1' },
+  { tag: 'GPU',         ru: 'Видеокарта',  color: '#EC4899' },
+  { tag: 'RAM',         ru: 'Оперативная память', color: '#06B6D4' },
+  { tag: 'Storage',     ru: 'Накопитель',  color: '#10B981' },
+  { tag: 'PSU',         ru: 'Блок питания', color: '#F59E0B' },
+  { tag: 'Cooler',      ru: 'Охлаждение',  color: '#3B82F6' },
+  { tag: 'Case',        ru: 'Корпус',      color: '#94A3B8' },
+];
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { COMPONENTS, CATEGORY_LIST };
+}

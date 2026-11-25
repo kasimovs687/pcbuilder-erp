@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="Отслеживание доставки заказа PCBuilder по трек-номеру. История перемещения и подтверждение получения без входа в систему.">
+<title>Отслеживание заказа — PCBuilder</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230EA5E9'/%3E%3Ctext x='50' y='67' font-size='40' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3EPC%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/style.css">
+<script>
+  try {
+    var p = localStorage.getItem('pcb.theme') || 'auto';
+    var dark = p === 'dark' || (p === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  } catch (e) {}
+</script>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-in">
+    <a class="logo" href="/"><div class="logo-mark">PC</div><span>PCBuilder</span></a>
+    <nav class="nav">
+      <a href="/builder">Конфигуратор</a>
+      <a href="/client">Кабинет клиента</a>
+      <a href="/" class="active">Отследить</a>
+    </nav>
+    <div class="spacer"></div>
+    <button class="icon-btn" onclick="PCB.theme.toggle()" title="Сменить тему" aria-label="Сменить тему">🌙</button>
+  </div>
+</header>
+
+<main class="wrap-narrow">
+  <div class="track-hero">
+    <div class="logo-mark" style="margin:0 auto 14px;width:44px;height:44px;font-size:15px">PC</div>
+    <h1>Где мой заказ?</h1>
+    <p class="muted">Введите трек-номер из SMS или накладной — покажем путь посылки и дадим подтвердить получение.
+      <b>Вход в кабинет не нужен.</b></p>
+
+    <form class="track-form" id="track-form">
+      <input id="track-input" placeholder="TR7368788679" autocomplete="off" spellcheck="false" inputmode="text" aria-label="Трек-номер">
+      <button class="btn btn-primary btn-lg" id="track-btn" type="submit">Найти</button>
+    </form>
+
+    <div class="track-hint small muted" id="track-hint">
+      Номер приходит в SMS после передачи заказа в службу доставки.
+    </div>
+  </div>
+
+  <div id="track-result" class="mt-24"></div>
+
+  <div class="card mt-24">
+    <h3 class="mb-8">Как это работает</h3>
+    <div class="grid grid-2 gap-8">
+      <div class="row-top gap-8"><span>1️⃣</span><div class="small"><b>Найдите трек-номер</b><br><span class="muted">в SMS, накладной или в кабинете клиента</span></div></div>
+      <div class="row-top gap-8"><span>2️⃣</span><div class="small"><b>Смотрите историю</b><br><span class="muted">каждое событие перевозчика попадает сюда сразу</span></div></div>
+      <div class="row-top gap-8"><span>3️⃣</span><div class="small"><b>Проверьте комплектацию</b><br><span class="muted">сверьте состав с накладной</span></div></div>
+      <div class="row-top gap-8"><span>4️⃣</span><div class="small"><b>Подтвердите кодом</b><br><span class="muted">4 цифры из накладной закроют заказ</span></div></div>
+    </div>
+  </div>
+</main>
+
+<script src="/common.js"></script>
+<script src="/track.js"></script>
+</body>
+</html>

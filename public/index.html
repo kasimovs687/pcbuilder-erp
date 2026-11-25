@@ -1,0 +1,280 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="PCBuilder — мастерская по сборке ПК: конфигуратор с проверкой совместимости, заказы, оплата, склад, приёмка и логистика с трекингом доставки.">
+<title>PCBuilder — сборка ПК под ключ: конфигуратор, заказы, склад и доставка</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238B5CF6'/%3E%3Cstop offset='1' stop-color='%234F46E5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='24' fill='url(%23g)'/%3E%3Ctext x='50' y='67' font-size='40' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3EPC%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/style.css">
+<script>
+  /* Тема применяется до отрисовки — чтобы не мигало белым */
+  try {
+    var p = localStorage.getItem('pcb.theme') || 'auto';
+    var dark = p === 'dark' || (p === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  } catch (e) {}
+</script>
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="row gap-8 mb-16">
+        <div class="logo-mark">PC</div>
+        <div>
+          <div class="strong" style="letter-spacing:-.02em">PCBuilder</div>
+          <div class="logo-sub">ERP мастерской</div>
+        </div>
+      </div>
+
+      <h1>Соберём ваш ПК <span class="grad">под ключ</span><br>и доведём до двери</h1>
+
+      <p class="hero-lead">
+        Конфигуратор с проверкой совместимости, заказы и оплата, складской учёт с приёмкой
+        комплектующих, канбан сборки и трекинг доставки с подтверждением получения.
+        Всё в одной системе, данные — в вашей базе.
+      </p>
+
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-lg" href="/builder">🛠 Собрать ПК</a>
+        <a class="btn btn-lg" href="/track">📦 Отследить заказ</a>
+      </div>
+
+      <div class="hero-facts">
+        <div class="hero-fact"><b id="f-cat">0</b><span>комплектующих в каталоге</span></div>
+        <div class="hero-fact"><b>8</b><span>этапов от заказа до доставки</span></div>
+        <div class="hero-fact"><b>4</b><span>способа оплаты</span></div>
+      </div>
+    </div>
+
+    <!-- Живая карточка-превью панели сборщика -->
+    <div class="hero-card" id="hero-card">
+      <div class="row-between mb-12">
+        <div>
+          <div class="strong">Мастерская сегодня</div>
+          <div class="xs muted">панель сборщика · обновляется из базы</div>
+        </div>
+        <span class="chip ok"><span class="pulse">●</span> онлайн</span>
+      </div>
+      <div id="hero-stats">
+        <div class="grid grid-3 gap-8">
+          <div class="skeleton" style="height:58px"></div>
+          <div class="skeleton" style="height:58px"></div>
+          <div class="skeleton" style="height:58px"></div>
+        </div>
+      </div>
+      <div class="mt-16" id="hero-flow">
+        <div class="stepper">
+          <div class="step done"><span class="dot">✓</span><span class="step-label">Закупка</span></div>
+          <div class="step done"><span class="dot">✓</span><span class="step-label">Сборка</span></div>
+          <div class="step now"><span class="dot">●</span><span class="step-label">Тесты</span></div>
+          <div class="step"><span class="dot"></span><span class="step-label">Отправка</span></div>
+          <div class="step"><span class="dot"></span><span class="step-label">Доставка</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= СБОРКА В 1 КЛИК ================= -->
+<main class="wrap" id="main">
+  <section class="quick-cta mb-20">
+    <div class="row-between wrap-row gap-12 mb-12">
+      <div>
+        <h2>Соберите ПК за один клик</h2>
+        <p class="qc-lead">
+          Выберите, для чего нужен компьютер — конфигуратор подберёт совместимые детали в бюджет,
+          посчитает мощность и покажет, что система вытянет. Название каждой детали видно целиком.
+        </p>
+      </div>
+      <a class="btn btn-primary" href="/builder">Открыть конфигуратор →</a>
+    </div>
+    <div class="scenario-grid" id="scenarios">
+      <div class="skeleton" style="height:128px"></div>
+      <div class="skeleton" style="height:128px"></div>
+      <div class="skeleton" style="height:128px"></div>
+      <div class="skeleton" style="height:128px"></div>
+    </div>
+  </section>
+
+  <section class="mb-20">
+    <div class="center mb-20">
+      <h2 style="font-size:26px">Выберите, куда идём</h2>
+      <p class="muted" style="margin:0">Кабинет клиента и панель сборщика — разные интерфейсы с разными правами</p>
+    </div>
+
+    <div class="grid grid-2">
+      <article class="role-card" style="--role-accent:linear-gradient(135deg,#22D3EE,#0EA5E9)" onclick="location.href='/client'" role="button" tabindex="0" onkeydown="if(event.key==='Enter')location.href='/client'">
+        <div class="rc-icon">🧑‍💻</div>
+        <h2>Я клиент</h2>
+        <ul>
+          <li>Собрать ПК в конфигураторе и оформить заказ</li>
+          <li>Оплатить картой, СБП, по счёту или при получении</li>
+          <li>Следить за этапом сборки и общаться со сборщиком</li>
+          <li>Отследить доставку по трек-номеру и подтвердить получение</li>
+        </ul>
+        <span class="rc-arrow">Войти в кабинет →</span>
+      </article>
+
+      <article class="role-card" style="--role-accent:linear-gradient(135deg,#8B5CF6,#4F46E5)" onclick="location.href='/assembler'" role="button" tabindex="0" onkeydown="if(event.key==='Enter')location.href='/assembler'">
+        <div class="rc-icon">🛠️</div>
+        <h2>Я сборщик</h2>
+        <ul>
+          <li>Канбан заказов и перетаскивание карточек по этапам</li>
+          <li>Приёмка комплектующих и складской учёт</li>
+          <li>Сборка, тестирование, оформление отправки</li>
+          <li>База клиентов, документы, настройки и резервные копии БД</li>
+        </ul>
+        <span class="rc-arrow">Войти в панель →</span>
+      </article>
+    </div>
+
+    <div class="grid grid-2 mt-16">
+      <div class="card">
+        <div class="row gap-12">
+          <div class="preview-ic" style="font-size:18px">📦</div>
+          <div class="grow">
+            <div class="strong">Уже есть заказ?</div>
+            <div class="small muted">Введите трек-номер из SMS или накладной — вход не нужен, а код из накладной подтвердит получение.</div>
+          </div>
+        </div>
+        <a class="btn btn-primary mt-12" href="/track">Отследить заказ</a>
+      </div>
+      <div class="card">
+        <div class="row gap-12">
+          <div class="preview-ic" style="font-size:18px">🧪</div>
+          <div class="grow">
+            <div class="strong">Хотите проверить систему?</div>
+            <div class="small muted">Сквозной сценарий заказ → оплата → сборка → отправка → получение прогоняется одной командой.</div>
+          </div>
+        </div>
+        <div class="notice mt-12"><span class="n-icon">💡</span><span>В консоли сервера: <span class="mono">npm run smoke</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ВОЗМОЖНОСТИ ================= -->
+  <section class="mb-20">
+    <h2 style="font-size:22px">Как устроена система</h2>
+    <p class="muted mb-16">Один сервер, встроенная база SQLite, никаких внешних сервисов — всё работает локально.</p>
+    <div class="feature-grid">
+      <div class="feature"><div class="f-icon">🧩</div><h3>Конфигуратор с проверкой</h3><p>Сокеты, тип памяти, мощность БП и баланс CPU/GPU — конфликты подсвечиваются сразу.</p></div>
+      <div class="feature"><div class="f-icon">🗂</div><h3>Канбан заказов</h3><p>Девять статусов, перетаскивание карточек, история каждого действия по заказу.</p></div>
+      <div class="feature"><div class="f-icon">📥</div><h3>Приёмка и склад</h3><p>Поставки от поставщиков, автоматическое пополнение остатков и резервы под заказы.</p></div>
+      <div class="feature"><div class="f-icon">🚚</div><h3>Логистика и трекинг</h3><p>Перевозчик, трек-номер, вес, ETA и публичная страница отслеживания без входа.</p></div>
+      <div class="feature"><div class="f-icon">🧾</div><h3>Документы</h3><p>Заказ-наряд, счёт с реквизитами и акт приёма-передачи — печать в PDF из браузера.</p></div>
+      <div class="feature"><div class="f-icon">💬</div><h3>Переписка</h3><p>Клиент и сборщик общаются прямо в карточке заказа — история сохраняется.</p></div>
+      <div class="feature"><div class="f-icon">🔐</div><h3>Роли и доступ</h3><p>Сессии в базе, пароли scrypt, разделение прав клиента и сотрудника.</p></div>
+      <div class="feature"><div class="f-icon">⚙️</div><h3>Настройки в БД</h3><p>Реквизиты, тарифы сборки и доставки редактируются из панели, без правки кода.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= КАК РАБОТАЕТ ================= -->
+  <section class="mb-20">
+    <h2 style="font-size:22px">Путь заказа</h2>
+    <p class="muted mb-16">Восемь шагов — от конфигуратора до подтверждения получения.</p>
+    <div class="steps">
+      <div class="step-card"><h4>Сборка в конфигураторе</h4><p>Проверка совместимости и расчёт мощности.</p></div>
+      <div class="step-card"><h4>Оформление заказа</h4><p>Способ доставки и оплаты, комментарий мастеру.</p></div>
+      <div class="step-card"><h4>Оплата</h4><p>Карта, СБП, счёт для юрлица или наличными при получении.</p></div>
+      <div class="step-card"><h4>Закупка комплектующих</h4><p>Поставщик, накладная, приёмка на склад.</p></div>
+      <div class="step-card"><h4>Сборка и тесты</h4><p>Стресс-тесты, проверка температур, упаковка.</p></div>
+      <div class="step-card"><h4>Отправка</h4><p>Перевозчик, трек-номер, вес и ожидаемая дата.</p></div>
+      <div class="step-card"><h4>Доставка</h4><p>Клиент видит историю перемещения по ссылке из SMS.</p></div>
+      <div class="step-card"><h4>Получение</h4><p>Подтверждение кодом из накладной закрывает заказ.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= О СИСТЕМЕ ================= -->
+  <section class="card mb-20">
+    <div class="row-between mb-12">
+      <div>
+        <h2 style="font-size:18px;margin:0">О системе</h2>
+        <p class="small muted" style="margin:2px 0 0">Доступы в кабинеты выдаёт администратор мастерской</p>
+      </div>
+      <button class="btn btn-sm" id="theme-toggle" onclick="PCB.toggleTheme()">🌙 Тема</button>
+    </div>
+    <div class="notice">
+      <span class="n-icon">🗄️</span>
+      <span>База данных — встроенная <b>SQLite</b> (файл <span class="mono">data/pcbuilder.db</span>).
+      Схема создаётся и наполняется демо-данными автоматически при первом запуске.
+      Резервную копию можно скачать прямо из панели сборщика.</span>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="f-links">
+    <a href="/builder">Конфигуратор</a>
+    <a href="/client">Кабинет клиента</a>
+    <a href="/assembler">Панель сборщика</a>
+    <a href="/track">Отслеживание</a>
+    <a href="/api/health">Состояние системы</a>
+  </div>
+  <div>PCBuilder ERP · <span id="f-company">ООО «PCBuilder»</span> · <span id="f-phone">+7 (999) 000-00-00</span></div>
+</footer>
+
+<script src="/common.js"></script>
+<script>
+/* Лендинг подтягивает реальные данные из БД — витрина честная, а не картинка */
+(async () => {
+  let m = {};
+  try {
+    m = await PCB.meta();
+    if (m.company) {
+      document.getElementById('f-company').textContent = m.company.company || m.company.brand;
+      document.getElementById('f-phone').textContent = m.company.phone || '';
+    }
+  } catch (e) { /* офлайн-превью не критично */ }
+
+  // Сценарии «сборки в 1 клик» приходят из /api/profiles и ведут прямо в конфигуратор
+  try {
+    const { profiles } = await (await fetch('/api/profiles')).json();
+    const box = document.getElementById('scenarios');
+    if (box && profiles && profiles.length) {
+      const fmt = (n) => Number(n).toLocaleString('ru-RU') + ' ₽';
+      box.innerHTML = profiles.map((p) => `
+        <a class="scenario" style="--sc:${p.accent}"
+           href="/builder?profile=${encodeURIComponent(p.id)}&budget=${p.budget.default}">
+          <div class="sc-icon">${p.icon}</div>
+          <div class="sc-title">${p.title}</div>
+          <div class="sc-desc">${p.blurb}</div>
+          <div class="sc-budget">${fmt(p.budget.min)} – ${fmt(p.budget.max)}</div>
+          <div class="sc-go">Собрать →</div>
+        </a>`).join('');
+    }
+  } catch (e) { /* каталог сценариев недоступен — блок просто останется пустым */ }
+
+  let catCount = 0;
+  try {
+    catCount = (await PCB.api('/api/components')).length;
+    document.getElementById('f-cat').textContent = PCB.num(catCount);
+  } catch (e) { /* каталог недоступен */ }
+
+  // Без входа доступны только метаданные, поэтому в превью показываем структуру системы
+  document.getElementById('hero-stats').innerHTML = `
+    <div class="grid grid-3 gap-8">
+      <div class="stat" style="--stat-accent:var(--brand)">
+        <span class="stat-label">Каталог</span>
+        <span class="stat-value">${PCB.num(catCount)}</span>
+        <span class="stat-foot">комплектующих</span>
+      </div>
+      <div class="stat" style="--stat-accent:var(--info)">
+        <span class="stat-label">Оплата</span>
+        <span class="stat-value">${Object.keys(m.paymentMethods || {}).length}</span>
+        <span class="stat-foot">способа</span>
+      </div>
+      <div class="stat" style="--stat-accent:var(--ok)">
+        <span class="stat-label">Доставка</span>
+        <span class="stat-value">${Object.keys(m.deliveryTypes || {}).length}</span>
+        <span class="stat-foot">варианта</span>
+      </div>
+    </div>`;
+})();
+</script>
+</body>
+</html>

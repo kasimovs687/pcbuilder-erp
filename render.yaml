@@ -1,0 +1,30 @@
+# Деплой на Render.com (бесплатный тариф).
+# Blueprint: New + → Blueprint → выбрать этот репозиторий.
+#
+# ВАЖНО про базу данных:
+#   На бесплатном тарифе постоянный диск недоступен, поэтому SQLite живёт в
+#   файловой системе контейнера и пересоздаётся из data.js при каждом рестарте.
+#   Каталог, профили сборок и демо-аккаунты восстановятся автоматически,
+#   а заказы, созданные вручную, после рестарта пропадут.
+#
+#   Чтобы данные сохранялись: переключить сервис на план Starter ($7/мес),
+#   раскомментировать блок `disk` ниже и оставить DB_FILE=/var/data/pcbuilder.db.
+
+services:
+  - type: web
+    name: pcbuilder-erp
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: echo "Зависимостей нет — сборка не требуется"
+    startCommand: node --experimental-sqlite server.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: DB_FILE
+        value: /opt/render/project/src/data/pcbuilder.db
+    # disk:
+    #   name: pcbuilder-data
+    #   mountPath: /var/data
+    #   sizeGB: 1

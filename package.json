@@ -1,0 +1,17 @@
+{
+  "name": "pc-bbbuildeeer",
+  "version": "2.0.0",
+  "private": true,
+  "description": "PC Builder — конфигуратор со сборкой в 1 клик (офис, игры, монтаж, 3D), каталог комплектующих из БД, заказы, оплата, склад, приёмка и логистика. SQLite, без внешних зависимостей.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --experimental-sqlite server.js",
+    "dev": "node --experimental-sqlite server.js",
+    "smoke": "node --experimental-sqlite tools/smoke-test.js",
+    "ui": "node --experimental-sqlite tools/ui-render-test.js"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "dependencies": {}
+}

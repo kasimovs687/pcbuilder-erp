@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0A0A11">
+<meta name="description" content="Собери ПК в один клик: подберём совместимые комплектующие под бюджет — офис, игры, монтаж видео или 3D-моделирование. Проверка совместимости и расчёт мощности в комплекте.">
+<title>PC Builder — сборка ПК в 1 клик</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238B5CF6'/%3E%3Cstop offset='.5' stop-color='%23EC4899'/%3E%3Cstop offset='1' stop-color='%2322D3EE'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='26' fill='url(%23g)'/%3E%3Cpath d='M30 62h40M35 52l-8 10 8 10M65 52l8 10-8 10' stroke='white' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/builder/styles.css">
+<script>
+  /* Тема ставится до отрисовки — иначе мигнёт светлым */
+  try {
+    var saved = localStorage.getItem('pcb.builder.theme');
+    var dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  } catch (e) {}
+</script>
+</head>
+<body>
+
+<!-- Абстрактный фон: плавные градиентные орбы + зерно. Только декор, не мешает контенту. -->
+<div class="abstract-bg" aria-hidden="true">
+  <span class="orb orb-a"></span>
+  <span class="orb orb-b"></span>
+  <span class="orb orb-c"></span>
+  <span class="grid-lines"></span>
+  <span class="grain"></span>
+</div>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text">
+        <b>PC BUILDER</b>
+        <i>сборка в один клик</i>
+      </span>
+    </a>
+
+    <nav class="nav" id="nav">
+      <button class="nav-btn is-active" data-page="quick" type="button">Сборка</button>
+      <button class="nav-btn" data-page="catalog" type="button">Каталог</button>
+      <button class="nav-btn" data-page="build" type="button">Моя сборка <span class="nav-count" id="nav-count" hidden>0</span></button>
+    </nav>
+
+    <div class="spacer"></div>
+
+    <a class="ghost-btn" href="/client">Кабинет</a>
+    <button class="icon-btn" id="theme-btn" type="button" title="Сменить тему" aria-label="Сменить тему">
+      <span class="theme-glyph"></span>
+    </button>
+  </div>
+</header>
+
+<main id="app">
+  <div class="boot">
+    <div class="boot-ring"></div>
+    <div class="muted">Загружаем каталог…</div>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="foot-in">
+    <span>PC Builder ERP · конфигуратор</span>
+    <nav class="foot-links">
+      <a href="/">Главная</a>
+      <a href="/client">Кабинет клиента</a>
+      <a href="/assembler">Панель сборщика</a>
+      <a href="/track">Отследить заказ</a>
+    </nav>
+  </div>
+</footer>
+
+<div id="toast-root"></div>
+
+<script src="/builder/app.js"></script>
+</body>
+</html>

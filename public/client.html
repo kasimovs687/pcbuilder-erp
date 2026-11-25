@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>Кабинет клиента — PCBuilder</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%237C3AED'/%3E%3Ctext x='50' y='67' font-size='40' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3EPC%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/style.css">
+<script>
+  try {
+    var p = localStorage.getItem('pcb.theme') || 'auto';
+    var dark = p === 'dark' || (p === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  } catch (e) {}
+</script>
+</head>
+<body>
+
+<header class="header" id="header" style="display:none">
+  <div class="header-in">
+    <a class="logo" href="/"><div class="logo-mark">PC</div><span>PCBuilder</span></a>
+    <nav class="nav" id="nav">
+      <button data-view="orders" class="active">Мои заказы</button>
+      <button data-view="profile">Профиль</button>
+      <a href="/builder">Конфигуратор</a>
+      <a href="/track">Отследить</a>
+    </nav>
+    <div class="spacer"></div>
+    <button class="icon-btn" id="theme-btn" onclick="PCB.theme.toggle()" title="Сменить тему" aria-label="Сменить тему">🌙</button>
+    <div class="user-chip">
+      <div class="avatar" id="avatar">К</div>
+      <span class="uc-name" id="who">—</span>
+    </div>
+    <button class="btn btn-sm" onclick="logout()">Выйти</button>
+  </div>
+</header>
+
+<main class="wrap" id="app">
+  <div class="loading-page">
+    <div class="spinner"></div>
+    <div class="muted small">Загружаем кабинет…</div>
+  </div>
+</main>
+
+<script src="/common.js"></script>
+<script src="/client.js"></script>
+</body>
+</html>
